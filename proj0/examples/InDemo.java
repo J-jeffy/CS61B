@@ -31,5 +31,6 @@ public class InDemo {
 					               tons + " of salt per year. Very nice!");
 			}			
 		}
+
 	}
 } 
