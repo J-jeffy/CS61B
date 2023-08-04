@@ -1,11 +1,11 @@
-class Planet {
+public class Planet {
     public double xxPos;//当前的x位置
     public double yyPos;//当前的y位置
     public double xxVel;//当前的x速度
     public double yyVel;//当前的y速度
     public double mass;//质量
     public String imgFileName;//描绘行星的图像对应的文件名
-    public static double G = 6.67*Math.pow(10,-11);
+    private static double G = 6.67*Math.pow(10,-11);
 
     public Planet(double xP, double yP, double xV,
                   double yV, double m, String img){

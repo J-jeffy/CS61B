@@ -50,7 +50,7 @@ public class NBody {
             double xxVel = in.readDouble();
             double yyVel = in.readDouble();
             double mass = in.readDouble();
-            String img = "images/"+in.readString();
+            String img = in.readString();
             planets[i] = new Planet(xxPos,yyPos,xxVel,yyVel,mass,img);
             i++;
             n--;
