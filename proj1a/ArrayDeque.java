@@ -31,12 +31,14 @@ public class ArrayDeque<T> {
         }
         T[] item = (T[]) (new Object[size]);
         if (flag2) { //不用分段,无论是addFirst和addLast溢出时都只有一种情况,first == last
-            System.arraycopy(array, first + 1, item, 0, lastSize - first - 1); //从first+1开始复制,复制到size-1
+            //从first+1开始复制,复制到size-1
+            System.arraycopy(array, first + 1, item, 0, lastSize - first - 1);
             System.arraycopy(array, 0, item, lastSize - first - 1, last + 1); //从0开始复制,复制到last
             last = lastSize - first + last - 1; //总长度-1
         } else { //数组减小
             if (first > last) { //first 在右边,分两段复制
-                System.arraycopy(array, first + 1, item, 0, lastSize - first - 1); //从first+1开始复制,复制到size-1
+                //从first+1开始复制,复制到size-1
+                System.arraycopy(array, first + 1, item, 0, lastSize - first - 1);
                 System.arraycopy(array, 0, item, lastSize - first - 1, last + 1); //从0开始复制,复制到last
                 last = lastSize - first + last - 1; //总长度-1
             } else { //first在左边
