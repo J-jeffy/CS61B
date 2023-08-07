@@ -56,8 +56,8 @@ public class ArrayDequeTest {
         integers.addLast(14);
         integers.addFirst(1);
         integers.addFirst(2);
-        System.out.println(a+" "+b+" "+c);
-        System.out.println(d+" "+e+" "+f);
+        System.out.println(a + " " + b + " " + c);
+        System.out.println(d + " " + e + " " + f);
         integers.printDeque();
         System.out.println(integers.size());
 

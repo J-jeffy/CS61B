@@ -44,10 +44,15 @@ public class LinkedListDeque<T> {
         size += 1;
     }
 
-    public void removeFirst() {
+    public T removeFirst() {
+        if (size == 0) {
+            return null;
+        }
+        T val = first.next.val;
         first.next = first.next.next; //先指向first的后继第二节点
         first.next.pre = first; //改变后继第二节点的指向为first
         size -= 1;
+        return val;
     }
 
     public void addLast(T middle) {
@@ -59,10 +64,15 @@ public class LinkedListDeque<T> {
         size += 1;
     }
 
-    public void removeLast() {
+    public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
+        T val = last.pre.val;
         last.pre = last.pre.pre; //先将last的前驱指向last前驱的前驱
         last.pre.next = last; //last前驱的后继改为last
         size -= 1;
+        return val;
     }
 
     /*get必须使用迭代，而不是递归。*/
