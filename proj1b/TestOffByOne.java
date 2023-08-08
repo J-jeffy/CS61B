@@ -8,7 +8,10 @@ public class TestOffByOne {
 
     @Test
     public void testOffByOne() {
-        assertTrue(offByOne.equalChars('x', 'x'));
+        assertFalse(offByOne.equalChars('x', 'x'));
+        assertTrue(new Palindrome().isPalindrome("a", offByOne));
+        assertTrue(new Palindrome().isPalindrome("ab", offByOne));
+        assertFalse(new Palindrome().isPalindrome("aa", offByOne));
         assertTrue(offByOne.equalChars('x', 'y'));
         assertTrue(offByOne.equalChars('z', 'y'));
         assertTrue(offByOne.equalChars('2', '1'));
