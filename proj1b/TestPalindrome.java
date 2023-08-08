@@ -18,7 +18,7 @@ public class TestPalindrome {
 
     @Test
     public void testIsPalindrome() {
-        assertFalse(palindrome.isPalindrome("cat"));
+        assertFalse(palindrome.isPalindrome("aba"));
         assertFalse(palindrome.isPalindrome("catc"));
         assertTrue(palindrome.isPalindrome("noon"));
         assertTrue(palindrome.isPalindrome("racecar"));
