@@ -24,7 +24,8 @@ public class TTFAF {
         }
 
         // You can also do this:
-//         synthesizer.GuitarPlayer player = new synthesizer.GuitarPlayer(new java.io.File("path/to/music.mid"));
+//         synthesizer.GuitarPlayer player =
+//         new synthesizer.GuitarPlayer(new java.io.File("path/to/music.mid"));
 //         player.play();
     }
 
