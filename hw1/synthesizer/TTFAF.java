@@ -1,3 +1,5 @@
+package synthesizer;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,8 +24,8 @@ public class TTFAF {
         }
 
         // You can also do this:
-        // GuitarPlayer player = new GuitarPlayer(new java.io.File("path/to/music.mid"));
-        // player.play();
+//         synthesizer.GuitarPlayer player = new synthesizer.GuitarPlayer(new java.io.File("path/to/music.mid"));
+//         player.play();
     }
 
     private static final String TTFAF =
