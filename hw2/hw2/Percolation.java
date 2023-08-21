@@ -41,9 +41,6 @@ public class Percolation {
             if (row == 0) {
                 wqu.union(top, parse(row, col));
             }
-        /*if (row == len - 1 && !wqu.connected(top, bottom) && wqu.connected(top, parse(row, col))) {
-            wqu.union(bottom, parse(row, col));
-        }*/
             adjacent(row, col);
         }
     }
@@ -101,7 +98,7 @@ public class Percolation {
         if (row < 0 || col < 0) {
             throw new IllegalArgumentException();
         }
-        if(row == len && wqu.connected(top, parse(row, col)) && !wqu.connected(top, bottom)) { //只进入一次
+        if (row == len - 1 && wqu.connected(top, parse(row, col)) && !wqu.connected(top, bottom)) {
             wqu.union(bottom, top);
         }
         return wqu.connected(top, parse(row, col)); //会出现 backwash
