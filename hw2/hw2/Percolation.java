@@ -13,17 +13,24 @@ public class Percolation {
     private int bottom;
     private int len;
     private boolean[][] array;
+
+    private boolean[] bot;
     private WeightedQuickUnionUF wqu;
     private int size; // number of open sites
     // create N-by-N grid, with all sites initially blocked
     public Percolation(int N) {
+        if (N < 0) {
+            throw new IllegalArgumentException();
+        }
         len = N;
         wqu = new WeightedQuickUnionUF(N * N + 2); //top and bottom
         array = new boolean[N][N];
+        bot = new boolean[N];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 array[i][j] = false;
             }
+            bot[i] = false;
         }
         size = 0;
         top = N * N;
@@ -33,13 +40,16 @@ public class Percolation {
     // open the site (row, col) if it is not open already
     public void open(int row, int col) {
         if (row < 0 || col < 0) {
-            throw new IllegalArgumentException();
+            throw new IndexOutOfBoundsException();
         }
         if (!array[row][col]) { //避免重复,使得size错误
             array[row][col] = true;
             size++;
             if (row == 0) {
                 wqu.union(top, parse(row, col));
+            }
+            if (row == len - 1) {
+                bot[col] = true;
             }
             adjacent(row, col);
         }
@@ -98,9 +108,6 @@ public class Percolation {
         if (row < 0 || col < 0) {
             throw new IllegalArgumentException();
         }
-        if (row == len - 1 && wqu.connected(top, parse(row, col)) && !wqu.connected(top, bottom)) {
-            wqu.union(bottom, top);
-        }
         return wqu.connected(top, parse(row, col)); //会出现 backwash
     }
 
@@ -111,7 +118,14 @@ public class Percolation {
 
     // does the system percolate? 系统是否渗透
     public boolean percolates() { //bottom 加速没使用 可以继续优化
-        return wqu.connected(top, bottom);
+        for (int i = 0; i < len; i++) {
+            if (bot[i]) {
+                if (isFull(len - 1,i)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     // use for unit testing (not required)
