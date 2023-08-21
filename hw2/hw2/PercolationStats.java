@@ -10,13 +10,13 @@ public class PercolationStats {
         for (int i = 0; i < T; i++) {
             Percolation pc = pf.make(N);
             int sum = 0;
-            while(!pc.percolates()){
+            while (!pc.percolates()) {
                 rx = StdRandom.uniform(0, N);
                 ry = StdRandom.uniform(0, N);
                 pc.open(rx, ry);
                 sum++;
             }
-            threshold[i] = (double) sum / (double) N;
+            threshold[i] = (double) sum / (double) N * N;
         }
         this.T = T;
     } // perform T independent experiments on an N-by-N grid 在 N×N 网格上执行 T 个独立实验
