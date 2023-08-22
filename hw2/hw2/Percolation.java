@@ -11,6 +11,7 @@ public class Percolation {
 
     private int top;
     private int bottom;
+    private int bottom2;
     private int len;
     private boolean[][] array;
 
@@ -37,7 +38,9 @@ public class Percolation {
         bottom = top + 1;
     }
 
+    
     // open the site (row, col) if it is not open already
+    
     public void open(int row, int col) {
         if (row < 0 || col < 0) {
             throw new IndexOutOfBoundsException();
@@ -50,12 +53,17 @@ public class Percolation {
             }
             if (row == len - 1) {
                 bot[col] = true;
+                wqu.union(bottom, parse(row, col));
             }
             adjacent(row, col);
+            if (wqu.connected(top, bottom)) {
+                wqu.union(top, bottom2);
+            }
         }
     }
 
     /*adjacent: 判断周围四个相邻的*/
+    
     private void adjacent(int row, int col) {
         int N = len - 1; //range: 0 - N-1
         int x1 = row - 1;
@@ -91,6 +99,8 @@ public class Percolation {
 
     }
     //坐标映射
+
+
     private int parse(int row, int rol) {
         return row * len + rol;
     }
@@ -98,7 +108,7 @@ public class Percolation {
     // is the site (row, col) open?
     public boolean isOpen(int row, int col) {
         if (row < 0 || col < 0) {
-            throw new IllegalArgumentException();
+            throw new IndexOutOfBoundsException();
         }
         return array[row][col];
     }
@@ -106,7 +116,7 @@ public class Percolation {
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
         if (row < 0 || col < 0) {
-            throw new IllegalArgumentException();
+            throw new IndexOutOfBoundsException();
         }
         return wqu.connected(top, parse(row, col)); //会出现 backwash
     }
@@ -117,15 +127,17 @@ public class Percolation {
     }
 
     // does the system percolate? 系统是否渗透
+
     public boolean percolates() { //bottom 加速没使用 可以继续优化
-        for (int i = 0; i < len; i++) {
+        return wqu.connected(top, bottom2);
+        /*for (int i = 0; i < len; i++) {
             if (bot[i]) {
-                if (isFull(len - 1,i)) {
+                if (isFull(len - 1, i)) {
                     return true;
                 }
             }
         }
-        return false;
+        return false;*/
     }
 
     // use for unit testing (not required)

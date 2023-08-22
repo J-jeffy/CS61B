@@ -4,22 +4,22 @@ import edu.princeton.cs.introcs.StdStats;
 public class PercolationStats {
     private int T;
     private double[] threshold;
+
     public PercolationStats(int N, int T, PercolationFactory pf) {
-        if (N < 0 || T < 0) {
+        if (N <= 0 || T <= 0) {
             throw new IllegalArgumentException();
         }
         int rx, ry;
         threshold = new double[T];
         for (int i = 0; i < T; i++) {
             Percolation pc = pf.make(N);
-            int sum = 0;
             while (!pc.percolates()) {
                 rx = StdRandom.uniform(0, N);
                 ry = StdRandom.uniform(0, N);
                 pc.open(rx, ry);
-                sum++;
+
             }
-            threshold[i] = (double) sum / (double) (N * N);
+            threshold[i] = (double) pc.numberOfOpenSites() / (double) (N * N);
         }
         this.T = T;
     } // perform T independent experiments on an N-by-N grid 在 N×N 网格上执行 T 个独立实验
