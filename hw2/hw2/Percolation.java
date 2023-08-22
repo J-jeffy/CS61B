@@ -11,11 +11,10 @@ public class Percolation {
 
     private int top;
     private int bottom;
-    private int bottom2;
     private int len;
     private boolean[][] array;
 
-    private boolean[] bot;
+    private WeightedQuickUnionUF backwash;
     private WeightedQuickUnionUF wqu;
     private int size; // number of open sites
     // create N-by-N grid, with all sites initially blocked
@@ -24,14 +23,13 @@ public class Percolation {
             throw new IllegalArgumentException();
         }
         len = N;
-        wqu = new WeightedQuickUnionUF(N * N + 2); //top and bottom
+        backwash = new WeightedQuickUnionUF(N * N + 2); //top and bottom
+        wqu = new WeightedQuickUnionUF(N * N + 1); //top
         array = new boolean[N][N];
-        bot = new boolean[N];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 array[i][j] = false;
             }
-            bot[i] = false;
         }
         size = 0;
         top = N * N;
@@ -50,15 +48,12 @@ public class Percolation {
             size++;
             if (row == 0) {
                 wqu.union(top, parse(row, col));
+                backwash.union(top, parse(row, col));
             }
             if (row == len - 1) {
-                bot[col] = true;
-                wqu.union(bottom, parse(row, col));
+                backwash.union(bottom, parse(row, col));
             }
             adjacent(row, col);
-            if (wqu.connected(top, bottom)) {
-                wqu.union(top, bottom2);
-            }
         }
     }
 
@@ -86,15 +81,19 @@ public class Percolation {
         //邻接判断
         if (isOpen(x1, col) && x1 != row) {
             wqu.union(parse(x1, col), parse(row, col));
+            backwash.union(parse(x1, col), parse(row, col));
         }
         if (isOpen(x2, col) && x2 != row) {
             wqu.union(parse(x2, col), parse(row, col));
+            backwash.union(parse(x2, col), parse(row, col));
         }
         if (isOpen(row, y1) && y1 != col) {
             wqu.union(parse(row, y1), parse(row, col));
+            backwash.union(parse(row, y1), parse(row, col));
         }
         if (isOpen(row, y2) && y2 != col) {
             wqu.union(parse(row, y2), parse(row, col));
+            backwash.union(parse(row, y2), parse(row, col));
         }
 
     }
@@ -127,17 +126,8 @@ public class Percolation {
     }
 
     // does the system percolate? 系统是否渗透
-
     public boolean percolates() { //bottom 加速没使用 可以继续优化
-        return wqu.connected(top, bottom2);
-        /*for (int i = 0; i < len; i++) {
-            if (bot[i]) {
-                if (isFull(len - 1, i)) {
-                    return true;
-                }
-            }
-        }
-        return false;*/
+        return backwash.connected(top, bottom);
     }
 
     // use for unit testing (not required)
@@ -149,7 +139,6 @@ public class Percolation {
             int y = sc.nextInt();
             percolation.open(x, y);
         }
-
     }
 
 }
