@@ -152,6 +152,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             p.right = delete(key, p.right);
         } else {
             val = p.value;
+            size--;
             if (p.left == null) {
                 return p.right;
             }
@@ -159,9 +160,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                 return p.left;
             }
             Node min = findMin(root.right);
+            min.right = removeMin(p.right); //关键 先右再左
             min.left = p.left;
-            min.right = removeMin(p.right); //关键
-            size--;
             return min;
         }
         return p;
